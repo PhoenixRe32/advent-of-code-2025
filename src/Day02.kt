@@ -56,8 +56,7 @@ private fun Long.isRepeatedPattern(): Boolean {
         .asSequence()
         .filter { number.isMultipleOf(it) }
         .map { number.splitInEqualPartsOf(it) }
-        .filter { it.allItemsAreEqual() }
-        .any()
+        .any { it.allItemsAreEqual() }
 }
 
 private fun List<String>.allItemsAreEqual(): Boolean = distinct().size == 1
