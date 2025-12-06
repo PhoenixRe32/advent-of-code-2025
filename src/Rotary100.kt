@@ -1,19 +1,18 @@
+import kotlin.math.absoluteValue
+import kotlin.math.sign
+
 // Assuming only positive numbers (and 0)
 object Rotary100 {
     private const val BASE = 100
     private val range = 0..<BASE
 
     fun rotate(startingPosition: RotationResult, rotation: Rotation): RotationResult {
-        var pos = startingPosition.position.requireValidityForBase()
-        var zeros = 0
-        repeat(rotation.clicks) {
-            pos += rotation.direction.move
-            pos = if (pos == 100) 0 else pos
-            pos = if (pos == -1) 99 else pos
-            zeros += if (pos == 0) 1 else 0
-        }
+        val sum = startingPosition.position.requireValidityForBase() + (rotation.clicks * rotation.direction.move)
+        val zeros = if (startingPosition.position == 0) (sum / BASE).absoluteValue
+        else (sum / BASE).absoluteValue + if (sum.sign != startingPosition.position.sign) 1 else 0
 
-        return RotationResult(position = pos, zeroClicks = zeros)
+        val position = (sum % BASE).run { if (this < 0) this + BASE else this }
+        return RotationResult(position = position, zeroClicks = zeros)
     }
 
     private fun Int.requireValidityForBase(): Int {
