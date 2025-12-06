@@ -1,3 +1,5 @@
+import kotlin.time.measureTimedValue
+
 interface Day<N : Number> {
     fun part1(input: List<String>): N
     fun part2(input: List<String>): N
@@ -14,9 +16,9 @@ interface Day<N : Number> {
     fun execute() {
         val input = readInput(day)
         println("PART 1")
-        part1(input).println()
+        measureTimedValue{ part1(input) }.println()
         println("=====")
         println("PART 2")
-        part2(input).println()
+        measureTimedValue{ part2(input) }.println()
     }
 }
