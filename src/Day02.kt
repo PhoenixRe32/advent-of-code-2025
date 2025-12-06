@@ -1,6 +1,5 @@
 class Day02 : Day<Long> {
     override val day = "Day02"
-
     override fun part1(input: List<String>): Long {
         return input.toSequenceOfRanges()
             .flatMap { range ->
@@ -10,7 +9,11 @@ class Day02 : Day<Long> {
     }
 
     override fun part2(input: List<String>): Long {
-        return  0
+        return input.toSequenceOfRanges()
+            .flatMap { range ->
+                range.asSequence().filter { it.isRepeatedPattern() }
+            }
+            .sum()
     }
 
     private fun List<String>.toSequenceOfRanges() = asSequence()
@@ -23,7 +26,7 @@ class Day02 : Day<Long> {
 
 fun main() {
     Day02().run {
-        test(1227775554, 0)
+        test(1227775554, 4174379265)
         execute()
     }
 }
@@ -46,3 +49,28 @@ private fun String.splitInMiddle(): Pair<Long, Long> =
     substring(0, length / 2).toLong() to substring(length / 2).toLong()
 
 private fun Pair<Long, Long>.isMirrored() = (first == second)
+
+private fun Long.isRepeatedPattern(): Boolean {
+    val number = toString(10)
+    return number.maxRepeatableLength().downTo(1)
+        .asSequence()
+        .filter { number.isMultipleOf(it) }
+        .map { number.splitInEqualPartsOf(it) }
+        .filter { it.allItemsAreEqual() }
+        .any()
+}
+
+private fun List<String>.allItemsAreEqual(): Boolean = distinct().size == 1
+
+private fun String.maxRepeatableLength(): Int = length / 2
+
+private fun String.isMultipleOf(n: Int): Boolean = length % n == 0
+
+private fun String.splitInEqualPartsOf(substringLength: Int): List<String> {
+    require(length % substringLength == 0) { "String length $length must be exactly divisible by $substringLength" }
+    return buildList {
+        repeat(length / substringLength) { idx ->
+            add(substring(idx * substringLength, (idx + 1) * substringLength))
+        }
+    }
+}
