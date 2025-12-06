@@ -40,15 +40,10 @@ private fun toRange(lower: String, upper: String): LongRange =
 
 private fun Long.isMirror(): Boolean {
     val number = toString(10).takeIf(String::isEvenLength) ?: return false
-    return number.splitInMiddle().isMirrored()
+    return number.splitInEqualPartsOf(number.length / 2).allItemsAreEqual()
 }
 
 private fun String.isEvenLength(): Boolean = length % 2 == 0
-
-private fun String.splitInMiddle(): Pair<Long, Long> =
-    substring(0, length / 2).toLong() to substring(length / 2).toLong()
-
-private fun Pair<Long, Long>.isMirrored() = (first == second)
 
 private fun Long.isRepeatedPattern(): Boolean {
     val number = toString(10)
