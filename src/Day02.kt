@@ -1,3 +1,6 @@
+import RepeatablePattern.isMirror
+import RepeatablePattern.isRepeatedPattern
+
 class Day02 : Day<Long> {
     override val day = "Day02"
     override fun part1(input: List<String>): Long {
@@ -24,13 +27,6 @@ class Day02 : Day<Long> {
 
 }
 
-fun main() {
-    Day02().run {
-        test(1227775554, 4174379265)
-        execute()
-    }
-}
-
 private fun List<String>.validateRange(): List<String> = also {
     require(size == 2) { "Must be exactly 2 numbers: $this" }
 }
@@ -38,33 +34,9 @@ private fun List<String>.validateRange(): List<String> = also {
 private fun toRange(lower: String, upper: String): LongRange =
     (lower.toLongOrNull() ?: error("Not a number: $lower"))..(upper.toLongOrNull() ?: error("Not a number: $upper"))
 
-private fun Long.isMirror(): Boolean {
-    val number = toString(10).takeIf(String::isEvenLength) ?: return false
-    return number.splitInEqualPartsOf(number.length / 2).allItemsAreEqual()
-}
-
-private fun String.isEvenLength(): Boolean = length % 2 == 0
-
-private fun Long.isRepeatedPattern(): Boolean {
-    val number = toString(10)
-    return number.maxRepeatableLength().downTo(1)
-        .asSequence()
-        .filter { number.isMultipleOf(it) }
-        .map { number.splitInEqualPartsOf(it) }
-        .any { it.allItemsAreEqual() }
-}
-
-private fun List<String>.allItemsAreEqual(): Boolean = distinct().size == 1
-
-private fun String.maxRepeatableLength(): Int = length / 2
-
-private fun String.isMultipleOf(n: Int): Boolean = length % n == 0
-
-private fun String.splitInEqualPartsOf(substringLength: Int): List<String> {
-    require(length % substringLength == 0) { "String length $length must be exactly divisible by $substringLength" }
-    return buildList {
-        repeat(length / substringLength) { idx ->
-            add(substring(idx * substringLength, (idx + 1) * substringLength))
-        }
+fun main() {
+    Day02().run {
+        test(1227775554, 4174379265)
+        execute()
     }
 }
