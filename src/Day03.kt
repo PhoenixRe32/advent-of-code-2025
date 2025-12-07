@@ -1,12 +1,18 @@
 import DigitPlace.DECA
 import DigitPlace.UNITS
 
+fun main() {
+    Day03().run {
+        test(357, 3121910778619)
+        execute()
+    }
+}
+
 class Day03 : Day<Long> {
-    override val day = "Day03"
+
     override fun part1(input: List<String>): Long {
         return input.sumOf { it.findBiggestJoltage2() }
     }
-
     override fun part2(input: List<String>): Long {
         val joltages = input.map { it.findBiggestJoltage12() }
         return joltages.sum()
@@ -20,6 +26,7 @@ private fun String.findBiggestJoltage2(): Long {
         }
         .maxOf { it.prefix.toLong() }
 }
+
 
 private fun String.findBiggestJoltage12(): Long {
     var substrsWithPrefix = listOf(SubstringWithPrefix("", this))
@@ -37,12 +44,4 @@ private fun String.findBiggestJoltage12(): Long {
             }
     }
     return substrsWithPrefix.maxOf { it.prefix.toLong() }
-}
-
-
-fun main() {
-    Day03().run {
-        test(357, 3121910778619)
-        execute()
-    }
 }

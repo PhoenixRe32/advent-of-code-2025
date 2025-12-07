@@ -1,8 +1,15 @@
 import RepeatablePattern.isMirror
 import RepeatablePattern.isRepeatedPattern
 
+fun main() {
+    Day02().run {
+        test(1227775554, 4174379265)
+        execute()
+    }
+}
+
 class Day02 : Day<Long> {
-    override val day = "Day02"
+
     override fun part1(input: List<String>): Long {
         return input.toSequenceOfRanges()
             .flatMap { range ->
@@ -24,7 +31,6 @@ class Day02 : Day<Long> {
         .filter { it.isNotBlank() }
         .map { it.split("-").validateRange() }
         .map { (lower, upper) -> toRange(lower, upper) }
-
 }
 
 private fun List<String>.validateRange(): List<String> = also {
@@ -33,10 +39,3 @@ private fun List<String>.validateRange(): List<String> = also {
 
 private fun toRange(lower: String, upper: String): LongRange =
     (lower.toLongOrNull() ?: error("Not a number: $lower"))..(upper.toLongOrNull() ?: error("Not a number: $upper"))
-
-fun main() {
-    Day02().run {
-        test(1227775554, 4174379265)
-        execute()
-    }
-}

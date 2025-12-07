@@ -3,7 +3,7 @@ import kotlin.time.measureTimedValue
 interface Day<N : Number> {
     fun part1(input: List<String>): N
     fun part2(input: List<String>): N
-    val day: String
+    val day: String get() = this::class.simpleName!!
 
     fun test(part1ExpectedValue: N, part2ExpectedValue: N) {
         val testInput = readInput("${day}_test")
