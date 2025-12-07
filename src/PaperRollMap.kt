@@ -4,7 +4,7 @@ private const val SPACE = '.'
 
 class PaperRollMap(input: List<String>) {
     private val map: Array<Array<Char>> = Array(input.size) { Array(input[0].length) { '.' } }
-    private val toiletPaperCoOrds: MutableList<Pair<Int, Int>> = ArrayList()
+    private val toiletPaperCoOrds: MutableList<Pair<Int, Int>> = ArrayList(input.size * input[0].length)
 
     init {
         input.forEachIndexed { row, line ->
