@@ -1,5 +1,5 @@
 fun main() {
-    Day04().run {
+    DayXX().run {
         test(0, 0)
         execute()
     }
