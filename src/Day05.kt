@@ -1,5 +1,3 @@
-import java.util.TreeSet
-
 fun main() {
     Day05().run {
         test(3, 0)
@@ -10,8 +8,8 @@ fun main() {
 class Day05 : Day<Int> {
 
     override fun part1(input: List<String>): Int {
-        val ingredients = Ingredients(input)
-        return ingredients.countFreshIngredients()
+        val ingredientsAndFreshRanges = IngredientsAndFreshRanges(input)
+        return ingredientsAndFreshRanges.countFreshIngredients()
     }
 
     override fun part2(input: List<String>): Int {

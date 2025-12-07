@@ -1,6 +1,6 @@
 import java.util.TreeSet
 
-class Ingredients(input: List<String>) {
+class IngredientsAndFreshRanges(input: List<String>) {
     private val ranges: TreeSet<LongRange>
     private val ingredients: MutableSet<Long> = mutableSetOf()
 
