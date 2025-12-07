@@ -20,6 +20,38 @@ object ColumnOperationsInText {
         return resultOfColumn to inputForNext
     }
 
+    fun operateOnColumnCelaphodStyle(input: List<String>): Pair<Long, List<String>> {
+        val inputForNext = MutableList(input.size) { "" }
+
+        val (operator, remainingOperationsLine) = input.last().extractFirstWordAndReturnRemainder()
+        inputForNext[input.size - 1] = remainingOperationsLine
+
+        val op = OP.from(operator)
+
+        var maxOperandWidth = 0
+        val operands = (0 until input.size - 1).map { i ->
+            val (operand, remainingOperandsLines) = input[i].extractFirstWordAndReturnRemainder()
+
+            inputForNext[i] = remainingOperandsLines
+
+            maxOperandWidth = maxOf(maxOperandWidth, operand.length)
+            operand
+        }.map { it.replace(' ', '0') }
+
+        val operandsAsLongs = MutableList(10) { 0L }
+        operands.mapIndexed { row, operand ->
+            operand.toCharArray().mapIndexed { col, c ->
+                operandsAsLongs[col] = operandsAsLongs[col] + c.digitToInt() * power(10, operands.size - 1 - row)
+            }
+        }
+
+        val resultOfColumn = operandsAsLongs.fold(op.identity) { acc, operand ->
+            op.fn(acc, operand)
+        }
+
+        return resultOfColumn to inputForNext
+    }
+
     private fun String.extractFirstWordAndReturnRemainder(): Pair<String, String> {
         var nextSpaceIsStop = false
         val word = StringBuilder()
