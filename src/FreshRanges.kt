@@ -7,5 +7,7 @@ class FreshRanges(input: List<String>) {
             .forEach { line -> add(line.toRange()) }
     }.mergeNeighbors()
 
-    fun countFreshIngredientIds(): Long = TODO()
+    fun countFreshIngredientIds(): Long = ranges.fold(0L) { acc, range ->
+        acc + (range.last - range.first + 1)
+    }
 }
