@@ -1,6 +1,6 @@
 fun main() {
     Day04().run {
-        test(13, 0)
+        test(13, 43)
         execute()
     }
 }
@@ -13,6 +13,7 @@ class Day04 : Day<Int> {
     }
 
     override fun part2(input: List<String>): Int {
-        return 0
+        val paperRollMap = PaperRollMap(input)
+        return paperRollMap.removeRollsOfPaperRec()
     }
 }

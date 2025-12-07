@@ -23,6 +23,29 @@ class PaperRollMap(input: List<String>) {
         }
     }
 
+    fun removeRollsOfPaperRec(): Int {
+        var totalRemovedRolls = 0
+        var removedRolls = removeRollsOfPaper().also { totalRemovedRolls += it }
+        while (removedRolls > 0) {
+            removedRolls = removeRollsOfPaper().also { totalRemovedRolls += it }
+        }
+        return totalRemovedRolls
+    }
+
+    private fun removeRollsOfPaper(): Int {
+        var removedRolls = 0
+        val iter = toiletPaperCoOrds.iterator()
+        while (iter.hasNext()) {
+            val coords = iter.next()
+            if (countEnclosingSquareOf(coords.first, coords.second) { it == ROLL_OF_PAPER } < 5) {
+                map[coords.first][coords.second] = REMOVED_PAPER
+                removedRolls++
+                iter.remove()
+            }
+        }
+        return removedRolls
+    }
+
     private fun countEnclosingSquareOf(row: Int, col: Int, predicate: (Char) -> Boolean): Int =
         map.rangeOfNeighbouringRows(row).sumOf { row ->
             map[row].rangeOfNeighbouringColumns(col).count { col -> predicate(map[row][col]) }
