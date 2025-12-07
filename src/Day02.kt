@@ -29,13 +29,5 @@ class Day02 : Day<Long> {
     private fun List<String>.toSequenceOfRanges() = asSequence()
         .flatMap { it.split(",") }
         .filter { it.isNotBlank() }
-        .map { it.split("-").validateRange() }
-        .map { (lower, upper) -> toRange(lower, upper) }
+        .map { it.toRange() }
 }
-
-private fun List<String>.validateRange(): List<String> = also {
-    require(size == 2) { "Must be exactly 2 numbers: $this" }
-}
-
-private fun toRange(lower: String, upper: String): LongRange =
-    (lower.toLongOrNull() ?: error("Not a number: $lower"))..(upper.toLongOrNull() ?: error("Not a number: $upper"))
