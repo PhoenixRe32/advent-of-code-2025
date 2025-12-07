@@ -1,18 +1,19 @@
 fun main() {
     Day05().run {
-        test(3, 0)
+        test(3, 14)
         execute()
     }
 }
 
-class Day05 : Day<Int> {
+class Day05 : Day<Long> {
 
-    override fun part1(input: List<String>): Int {
+    override fun part1(input: List<String>): Long {
         val ingredientsAndFreshRanges = IngredientsAndFreshRanges(input)
         return ingredientsAndFreshRanges.countFreshIngredients()
     }
 
-    override fun part2(input: List<String>): Int {
-        return 0
+    override fun part2(input: List<String>): Long {
+        val freshRanges = FreshRanges(input)
+        return freshRanges.countFreshIngredientIds()
     }
 }

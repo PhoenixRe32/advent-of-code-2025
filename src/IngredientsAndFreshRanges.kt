@@ -21,7 +21,7 @@ class IngredientsAndFreshRanges(input: List<String>) {
         ranges = sortedRanges.mergeNeighbors()
     }
 
-    fun countFreshIngredients(): Int = ingredients.count { ingredient ->
+    fun countFreshIngredients(): Long = ingredients.count { ingredient ->
         ranges.floor(ingredient..ingredient)?.let { ingredient in it } ?: false
-    }
+    }.toLong()
 }
