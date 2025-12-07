@@ -16,7 +16,7 @@ class Day04 : Day<Int> {
                 if (!map[row][col]) return@sumOf 0
                 val numberOfRolls = map.countEnclosingSquareOf(row, col) { it }
                 // we are counting the square itself, so we add 1 to the rule of the quiz
-                if (numberOfRolls < 5 ) 1 else 0
+                if (numberOfRolls < 5) 1 else 0
             }
         }
     }
@@ -26,15 +26,10 @@ class Day04 : Day<Int> {
     }
 }
 
-fun Array<Array<Boolean>>.countEnclosingSquareOf(row: Int, col: Int, predicate: (Boolean) -> Boolean): Int {
-//    require(row in indices) { "Row $row is out of bounds" }
-//    require(col in first().indices) { "Col $col is out of bounds" }
-    val map = this
-
-    return rangeOfNeighbouringRows(row).sumOf { row ->
-        map[row].rangeOfNeighbouringColumns(col).count { col -> predicate(map[row][col]) }
+fun Array<Array<Boolean>>.countEnclosingSquareOf(row: Int, col: Int, predicate: (Boolean) -> Boolean): Int =
+    rangeOfNeighbouringRows(row).sumOf { row ->
+        this[row].rangeOfNeighbouringColumns(col).count { col -> predicate(this[row][col]) }
     }
-}
 
 private fun Array<Array<Boolean>>.rangeOfNeighbouringRows(row: Int): IntRange {
     return (row - 1).coerceAtLeast(0)..(row + 1).coerceAtMost(lastIndex)
@@ -57,9 +52,5 @@ fun createAndPopulateMap(input: List<String>): Array<Array<Boolean>> {
 // My map ordering is rows and columns
 // E.g. [3][5] means 3rd row, 5th column
 // Outer index is rows, innner is columns
-fun createMap(input: List<String>): Array<Array<Boolean>> {
-//    require(input.isNotEmpty())
-//    val cols = input[0].length
-//    require(input.all { it.length == cols }) { "All rows must have the same length" }
-    return Array(input.size) { Array(input[0].length) { false } }
-}
+fun createMap(input: List<String>): Array<Array<Boolean>> =
+    Array(input.size) { Array(input[0].length) { false } }
